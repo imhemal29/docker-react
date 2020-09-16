@@ -5,3 +5,21 @@ services:
 
 before_install:
     - docker build -t hemalshah/docker-react -f dockerfile.dev . 
+
+script: 
+    - docker run -e CI=true hemalshah/docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-1"
+    app: "docker"
+    env: "Docker-env"
+    bucket_name: elasticbeanstalk-us-east-1-657951286772
+    bucket_path: "docker"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+
+
+        Docker-env.eba-ptjmc3xa.us-east-1.elasticbeanstalk.com
